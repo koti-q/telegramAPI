@@ -1,4 +1,4 @@
-package telegramApi
+package telegramAPI
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 
 func TestNewBotAPI(t *testing.T) {
 	token := "test_token"
-	bot := NewBotAPI(token)
+	bot := NewBot(token)
 
 	if bot.Token != token {
 		t.Errorf("Expected token %s, got %s", token, bot.Token)

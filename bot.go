@@ -1,4 +1,4 @@
-package telegramApi
+package telegramAPI
 
 import (
 	"bytes"
@@ -28,7 +28,7 @@ type Chat struct {
 	ID string `json:"id"`
 }
 
-func NewBotAPI(token string) *BotAPI {
+func NewBot(token string) *BotAPI {
 	return &BotAPI{
 		Token: token,
 		URL:   fmt.Sprintf("https://api.telegram.org/bot%s/", token),
