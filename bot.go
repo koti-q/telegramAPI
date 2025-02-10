@@ -1,6 +1,7 @@
 package telegramApi
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -24,7 +25,7 @@ type Message struct {
 }
 
 type Chat struct {
-	ID int `json:"id"`
+	ID string `json:"id"`
 }
 
 func NewBotAPI(token string) *BotAPI {
@@ -57,4 +58,21 @@ func (bot *BotAPI) GetUpdates(offset int) ([]Update, error) {
 	}
 
 	return result.Updates, nil
+}
+
+func (bot *BotAPI) SendMessange(chatID string, text string) (bool, error) {
+	body, _ := json.Marshal(map[string]string{
+		"chat_id": chatID,
+		"text":    text,
+	})
+
+	response, err := http.Post(
+		fmt.Sprintf("%ssendMessage", bot.URL),
+		"application/json",
+		bytes.NewBuffer(body))
+	if err != nil {
+		return false, err
+	}
+	defer response.Body.Close()
+	return true, nil
 }
