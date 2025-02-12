@@ -89,7 +89,7 @@ func TestSendMessage(t *testing.T) {
 		URL:   server.URL + "/",
 	}
 
-	success, err := bot.SendMessange("123", "test message")
+	success, err := bot.SendMessange(123, "test message")
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}

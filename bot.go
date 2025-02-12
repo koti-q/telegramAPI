@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -25,7 +26,7 @@ type Message struct {
 }
 
 type Chat struct {
-	ID string `json:"id"`
+	ID int64 `json:"id"`
 }
 
 func NewBot(token string) *BotAPI {
@@ -46,6 +47,7 @@ func (bot *BotAPI) GetUpdates(offset int) ([]Update, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("Response from Telegram API (offset %d): %s", offset, body)
 
 	var result struct {
 		Ok      bool     `json:"ok"`
@@ -60,9 +62,9 @@ func (bot *BotAPI) GetUpdates(offset int) ([]Update, error) {
 	return result.Updates, nil
 }
 
-func (bot *BotAPI) SendMessange(chatID string, text string) (bool, error) {
+func (bot *BotAPI) SendMessange(chatID int64, text string) (bool, error) {
 	body, _ := json.Marshal(map[string]string{
-		"chat_id": chatID,
+		"chat_id": fmt.Sprintf("%d", chatID),
 		"text":    text,
 	})
 
